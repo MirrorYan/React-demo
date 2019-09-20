@@ -1,8 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createStore} from 'redux';
+import todoApp from './js/reducers';
 import './index.css';
+import {
+  addTodo,
+  toggleTodo,
+  setVisibilityFilter,
+  VisibilityFilters
+} from './js/actions';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+let store = createStore(todoApp);
+
+console.log(store.getState());
+// 每次更新state打印日志
+const unsubscribe = store.subscribe(() => console.log(store.getState()));
+// 发起一系列action
+store.dispatch(addTodo('Learn about actions'));
+store.dispatch(addTodo('Learn about reducers'));
+store.dispatch(toggleTodo(0));
+store.dispatch(toggleTodo(1));
+store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
+// 通过执行subscribe返回的函数停止监听
+unsubscribe();
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
