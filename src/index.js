@@ -1,41 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {createStore} from 'redux';
-import todoApp from './js/reducers';
+import todoApp from './reducers/reducers';
 import './index.css';
 import {
   addTodo,
   toggleTodo,
   setVisibilityFilter,
   VisibilityFilters
-} from './js/actions';
+} from './reducers/actions';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-// let store = createStore(todoApp);
+let store = createStore(todoApp);
 
-// console.log(store.getState());
+console.log(store.getState());
 // 每次更新state打印日志
-// const unsubscribe = store.subscribe(() => console.log(store.getState()));
+const unsubscribe = store.subscribe(() => console.log(store.getState()));
 // 发起一系列action
-// store.dispatch(addTodo('Learn about actions'));
-// store.dispatch(addTodo('Learn about reducers'));
-// store.dispatch(toggleTodo(0));
-// store.dispatch(toggleTodo(1));
-// store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
+store.dispatch(addTodo('Learn about actions'));
+store.dispatch(addTodo('Learn about reducers'));
+store.dispatch(toggleTodo(0));
+store.dispatch(toggleTodo(1));
+store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
 // 通过执行subscribe返回的函数停止监听
-// unsubscribe();
-
-function func() {
-  let num = 0;
-  function logNum() {
-    console.log(++num);
-  }
-  return logNum;
-}
-let myFunc = func();
-myFunc();
-myFunc();
+unsubscribe();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
