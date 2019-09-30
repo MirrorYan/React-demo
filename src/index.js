@@ -1,32 +1,20 @@
+/* Entry File */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {createStore} from 'redux';
-import todoApp from './reducers/reducers';
-import './index.css';
-import {
-  addTodo,
-  toggleTodo,
-  setVisibilityFilter,
-  VisibilityFilters
-} from './reducers/actions';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './reducers/';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-let store = createStore(todoApp);
+let store = createStore(rootReducer);
 
-console.log(store.getState());
-// 每次更新state打印日志
-const unsubscribe = store.subscribe(() => console.log(store.getState()));
-// 发起一系列action
-store.dispatch(addTodo('Learn about actions'));
-store.dispatch(addTodo('Learn about reducers'));
-store.dispatch(toggleTodo(0));
-store.dispatch(toggleTodo(1));
-store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
-// 通过执行subscribe返回的函数停止监听
-unsubscribe();
-
-ReactDOM.render(<App />, document.getElementById('root'));
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
 
 // unregister()用于取消对serviceWorker的注册并返回一个Promise
 // 没有找到注册时,这个Promise返回false,否则不论取消成功与否都返回true
